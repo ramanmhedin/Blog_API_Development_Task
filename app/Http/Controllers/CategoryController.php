@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     use ApiResponse;
-    
+
 
     public function index(CategoryRequest $request,CategoryService $categoryService): JsonResponse
     {
@@ -56,11 +56,6 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request,$id, CategoryService $categoryService): JsonResponse
     {
         $validData=$request->validated();
-
-        //check if the id is not text
-        if (!is_numeric($id)) {
-            return $this->errorResponse("Invalid category ID");
-        }
 
         try {
             $data=$categoryService->update($validData,$id);
