@@ -39,11 +39,13 @@ class CategorySeeder extends Seeder
             ['name' => 'DIY',            'slug' => 'diy',            'description' => 'Do-it-yourself projects and tutorials.'],
         ]);
 
-        DB::beginTransaction();
-
-        $categories->map(fn($category) => Category::query()->create($category));
-
-        DB::commit();
-
+        try {
+            DB::beginTransaction();
+            $categories->map(fn($category) => Category::query()->create($category));
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 }

@@ -24,24 +24,23 @@ class PostSeeder extends Seeder
 
         //I used the create method to user the Triggers Events (created).
         DB::beginTransaction();
-        try {
 
-        foreach (range(1, 50) as $i) {
-            Post::query()
-                ->create(
-                    [
-                        'title' => $faker->sentence(6),
-                        'content' => $faker->paragraphs(3, true),
-                        'author_id' => $faker->randomElement($authorIds),
-                        'category_id' => $faker->randomElement($categoryIds),
-                    ]
-                );
+        try {
+            foreach (range(1, 50) as $i) {
+                Post::query()
+                    ->create(
+                        [
+                            'title' => $faker->sentence(6),
+                            'content' => $faker->paragraphs(3, true),
+                            'author_id' => $faker->randomElement($authorIds),
+                            'category_id' => $faker->randomElement($categoryIds),
+                        ]);
+            }
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-        DB::commit();
-    } catch (\Exception $e) {
-DB::rollBack();
-    // Optionally log the error or display it
-throw $e;
-}
     }
 }
