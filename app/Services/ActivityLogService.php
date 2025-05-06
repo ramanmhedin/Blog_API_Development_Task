@@ -13,6 +13,7 @@ class ActivityLogService{
     public function index($validData)
     {
         $query=ActivityLog::query()
+            ->with('performerUser')
             ->when(isset($validData['search']),
                 fn($q) => $q->where('performer','ILIKE','%'.$validData['search']."%")
             )
