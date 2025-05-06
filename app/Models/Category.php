@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Observers\CategoryObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+#[ObservedBy([CategoryObserver::class])]
 
 class Category extends Model
 {
@@ -13,24 +16,13 @@ class Category extends Model
         [
             "name",
             "slug",
-            "description" ,
+            "description",
         ];
 
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(function ($category) {
-            $category->slug = Str::slug($category->name);
-        });
-
-        static::updating(function ($category) {
-            $category->slug = Str::slug($category->name);
-        });
-    }
 }
+
+
