@@ -7,8 +7,8 @@ This is a Laravel-based RESTful API for a simple blog system.
 * Composer
 * PostgreSQL
 
-⚠️ Note: This project uses the PostgreSQL-specific ILIKE operator for case-insensitive queries.
-To avoid runtime errors, please use PostgreSQL as your database. Using MySQL will result in syntax errors for these queries.
+#### ⚠️ Note: This project uses the PostgreSQL-specific ILIKE operator for case-insensitive queries.To avoid runtime errors, please use PostgreSQL as your database. Using MySQL will result in syntax errors for these queries.
+
 ---
 
 ## 🛠️ Installation
