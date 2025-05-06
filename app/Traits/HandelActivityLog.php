@@ -10,8 +10,9 @@ trait HandelActivityLog
 {
     public function createActivityLog($data): void
     {
-        $user=Auth::user();
-        $data['performer']=$user->name;
+        $user=Auth::user() ?? null;
+        $data['performer']=$user?->name ?? "un auth user";
+        $data['performer_id']=$user?->id ?? null;
         $data['timestamp']=now();
 
         ActivityLog::query()
