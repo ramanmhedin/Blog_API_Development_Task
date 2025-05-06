@@ -78,6 +78,9 @@ class PostController extends Controller
             $data=$postService->destroy($id);
             return $this->successResponse($data,"post deleted successfully");
 
+        }catch (UnauthorizedException) {
+            return $this->unauthorizedResponse("action unauthorized");
+
         }catch (ModelNotFoundException) {
             return $this->notFoundResponse("Post not found");
 
