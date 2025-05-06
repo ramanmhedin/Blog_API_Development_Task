@@ -17,6 +17,9 @@ class ActivityLog extends Model
     ];
     public $timestamps = false;
 
+    protected $casts=[
+        "changed_fields"=>'array',
+    ];
     protected static function booted(): void
     {
         static::creating(function ($task) {
