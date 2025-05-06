@@ -1,61 +1,205 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Blog API Development Task
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a Laravel-based RESTful API for a simple blog system.
+## 🚀 Requirements
 
-## About Laravel
+* PHP >= 8.1
+* Composer
+* PostgreSQL
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+⚠️ Note: This project uses the PostgreSQL-specific ILIKE operator for case-insensitive queries.
+To avoid runtime errors, please use PostgreSQL as your database. Using MySQL will result in syntax errors for these queries.
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Clone the Repository
 
-## Learning Laravel
+```bash
+  git clone https://github.com/ramanmhedin/Blog_API_Development_Task.git
+  cd Blog_API_Development_Task
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Install PHP Dependencies
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+  composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Copy the `.env` File
 
-## Laravel Sponsors
+```bash
+  cp .env.example .env
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 4. Generate the App Key
 
-### Premium Partners
+```bash
+  php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+### 5. Configure Environment Variables
 
-## Contributing
+Edit the `.env` file and update your database configuration:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=blog_api_development_task
+DB_USERNAME=postgres
+DB_PASSWORD=
+```
 
-## Code of Conduct
+### 6. Run Migrations
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+  php artisan migrate
+  php artisan db:seed # (optional)
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 💽 API Usage
 
-## License
+The API includes endpoints for managing blog posts and categories.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Example Routes
+
+* `GET /api/posts` - List all posts
+* `POST /api/posts` - Create a new post
+* `GET /api/posts/{id}` - View a specific post
+* `PUT /api/posts/{id}` - Update a post
+* `DELETE /api/posts/{id}` - Delete a post
+
+Use an API client like **Postman** or **Insomnia** to test the endpoints.
+
+## ✅ Testing
+
+This project uses [Pest](https://pestphp.com) – a delightful PHP Testing Framework built on top of PHPUnit.
+
+### Run All Tests
+
+```bash
+  php artisan test
+```
+
+Or directly with Pest:
+
+```bash
+  vendor/bin/pest
+```
+
+### Using `phpunit.xml`
+
+Before running the tests, make sure you have manually created the test database in your PostgreSQL server:
+
+```bash
+  createdb blog_api_development_task_test
+```
+
+Your test environment is configured via `phpunit.xml`:
+
+* PostgreSQL is used for testing
+* Custom test database: `blog_api_development_task_test`
+
+Example setup (already configured in `phpunit.xml`):
+
+```xml
+<env name="DB_CONNECTION" value="pgsql"/>
+<env name="DB_DATABASE" value="blog_api_development_task_test"/>
+<env name="DB_USERNAME" value="your-database-user"/>
+<env name="DB_PASSWORD" value="your-database-password"/>
+```
+
+No need for a `.env.testing` file unless you want an alternative config.
+
+---
+
+## 📁 Directory Structure
+    
+* `app/` – Application code (Models, Controllers, etc.)
+
+<details> <summary>more detail</summary>
+
+```bash
+app
+ ├── Http
+ │    ├── Controllers
+ │    │    ├── ActivityLogController.php  # Handles activity log management
+ │    │    ├── AuthController.php        # Manages authentication (login, register logout)
+ │    │    ├── CategoryController.php    # Handles CRUD for blog categories
+ │    │    ├── Controller.php            # Base controller (parent for other controllers)
+ │    │    └── PostController.php        # Manages CRUD for blog posts
+ │    └── Requests
+ │       ├── ActivityLogRequest.php      # Handles Validation  for activity log Request
+ │       ├── CategoryRequest.php         # Handles Validation  for category Request
+ │       └── PostRequest.php             # Handles Validation  for post Request
+ ├── Models
+ │    ├── ActivityLog.php               # Eloquent model for activity log
+ │    ├── Category.php                  # Eloquent model for category
+ │    ├── Post.php                      # Eloquent model for post
+ │    └── User.php                      # Eloquent model for user
+ ├── Observers
+ │    ├── CategoryObserver.php          # Observer for category model events (handling Activity log for any CRUD operation)
+ │    └── PostObserver.php              # Observer for post model events (handling Activity log for any CRUD operation)
+ ├── Providers
+ │    └── AppServiceProvider.php        # Service provider for app-wide bindings
+ ├── Services
+ │    ├── ActivityLogService.php        # CRUD logic for activity logs
+ │    ├── AuthService.php               # Authentication logic
+ │    ├── CategoryService.php           # CRUD logic for categories
+ │    └── PostService.php               # CRUD logic for posts
+ ├── Swagger
+ │    └── OpenApiSpec.php               # Swagger/OpenAPI specification file 
+ └── Traits
+      ├── ApiResponse.php              # Trait for consistent API responses
+      ├── HandleActivityLog.php        # Trait for handling activity log creation
+      └── Pagination.php               # Trait for handling pagination logic
+```
+</details>
+
+* `routes/api.php` – API route definitions
+* `resources/` – Blade views (if any)
+* `database/` – Migrations, seeders, and factories
+* `public/` – Public entry point
+
+---
+
+
+## 📖 API Documentation (Swagger)
+
+This project uses **Swagger/OpenAPI** to generate interactive API documentation.
+
+### 🔍 View the Docs
+
+Once your Laravel server is running, access the docs at:
+
+```
+http://localhost:8000/api/documentation
+```
+
+### 🛠️ Regenerate API Docs
+
+If you've added new annotations or changed existing ones, regenerate the Swagger docs using:
+
+```bash
+  php artisan l5-swagger:generate
+```
+
+> ℹ️ This command scans your annotated routes and controller methods and updates the Swagger UI accordingly.
+
+### 📄 Source of Documentation
+
+The core documentation spec is located at:
+
+```
+app/Swagger/OpenApiSpec.php
+```
+
+You can extend this or rely on annotations within controllers, requests, and models.
+
+
+## 📚 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
