@@ -11,6 +11,11 @@
 |
 */
 
+use App\Services\ActivityLogService;
+use App\Services\CategoryService;
+use App\Services\PostService;
+use Illuminate\Support\Facades\Artisan;
+
 pest()->extend(Tests\TestCase::class)
  // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
@@ -44,4 +49,14 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function activityLogService(): ActivityLogService {
+    return new ActivityLogService();
+}
+function postService(): PostService {
+    return new PostService();
+}
+function categoryService(): CategoryService {
+    return new CategoryService();
 }
