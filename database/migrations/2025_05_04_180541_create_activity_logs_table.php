@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('performer_id')->nullable()
+                ->constrained('users', 'id')->onDelete('set null');
             $table->string("performer");
             $table->enum('type_of_action',["CREATE","READ","UPDATE","DELETE"]);
             $table->string("entity_type");
