@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ActivityLog extends Model
 {
     //
     protected $fillable = [
+        "performer_id",
         "performer",
         "type_of_action",
         "entity_type",
@@ -25,6 +27,11 @@ class ActivityLog extends Model
         static::creating(function ($task) {
             $task->timestamp = now();
         });
+    }
+
+    public function performerUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'performer_id');
     }
 
 }
